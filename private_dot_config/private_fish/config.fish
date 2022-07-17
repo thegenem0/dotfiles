@@ -27,7 +27,7 @@ set TERM_EMULATOR (ps -aux | grep (ps -p $fish_pid -o ppid=) | awk 'NR==1{print 
 # Neofetch
 switch "$TERM_EMULATOR"
 case '*kitty*'
-	neofetch --backend 'kitty'
+	neofetch --backend 'ascii'
 case '*tmux*' '*login*' '*sshd*' '*konsole*'
 	neofetch --backend 'ascii' --ascii_distro 'arch' 
 case '*'

@@ -10,3 +10,4 @@
 - LSP needs a C compiler (gcc on Linux, MinGW or similar for Windows)
 - Telescope needs ripgrep
 - Treesitter needs the `tree-sitter-cli` node package
+- Telescope may need fzf installed as a binary

@@ -23,6 +23,11 @@ local on_attach = function(client, bufnr)
 	-- keybind options
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
+	if client.name == "eslint" then
+		vim.cmd.LspStop("eslint")
+		return
+	end
+
 	-- set keybinds
 	keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts, { desc = "Show Definition" }) -- show definition, references
 	keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts, { desc = "Show Declaration" }) -- got to declaration
@@ -47,6 +52,8 @@ end
 
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
+
+-- lspconfig utils
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 -- (not in youtube nvim video)
@@ -108,4 +115,17 @@ lspconfig["sumneko_lua"].setup({
 			},
 		},
 	},
+})
+
+lspconfig["eslint"].setup({
+	-- Copied from nvim-lspconfig/lua/lspconfig/server_conigurations/eslint.js
+	root_dir = lspconfig.util.root_pattern(
+		".eslintrc",
+		"package.json",
+		".eslintrc.js",
+		".eslintrc.cjs",
+		".eslintrc.yaml",
+		".eslintrc.yml",
+		".eslintrc.json"
+	),
 })

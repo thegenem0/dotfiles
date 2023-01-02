@@ -49,11 +49,16 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find C
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "List Buffers" }) -- list open buffers in current neovim instance
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Help Tags" }) -- list available help tags
 
--- telescope git commands (not on youtube nvim video)
+-- telescope git commands
 keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "List Commits" }) -- list all git commits (use <cr> to checkout) ["gc" for git commits]
 keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>", { desc = "List File Commits" }) -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
 keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", { desc = "List Branches" }) -- list git branches (use <cr> to checkout) ["gb" for git branch]
 keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Git Status" }) -- list current changes per file with diff preview ["gs" for git status]
 
--- restart lsp server (not on youtube nvim video)
+-- restart lsp server
 keymap.set("n", "<leader>rs", ":LspRestart<CR>", { desc = "Restart LSP" }) -- mapping to restart lsp if necessary
+
+keymap.set("n", "<Up>", "<Nop>")
+keymap.set("n", "<Down>", "<Nop>")
+keymap.set("n", "<Left>", "<Nop>")
+keymap.set("n", "<Right>", "<Nop>")

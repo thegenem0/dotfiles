@@ -65,6 +65,9 @@ return packer.startup(function(use)
 	-- vs-code like icons
 	use("kyazdani42/nvim-web-devicons")
 
+	-- bufferline
+	use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons" })
+
 	-- statusline
 	use("nvim-lualine/lualine.nvim")
 

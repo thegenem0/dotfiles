@@ -7,18 +7,18 @@ local keymap = vim.keymap -- for conciseness
 -- General Keymaps
 ---------------------
 
--- use jk to exit insert mode
-keymap.set("i", "jk", "<ESC>", { desc = "Exit Insert Mode" })
+-- use C-c to exit insert mode
+keymap.set("i", "<C-c>", "<ESC>", { desc = "Exit Insert Mode" })
 
 -- clear search highlights
-keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear Search Highlights" })
+keymap.set("n", "<leader>ch", ":nohl<CR>", { desc = "Clear Search Highlights" })
 
 -- delete single character without copying into register
 keymap.set("n", "x", '"_x', { desc = "Delete Char without Copy" })
 
--- increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment Number" }) -- increment
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement Number" }) -- decrement
+-- increment/decrement numbers (don't really have a need for these right now)
+-- keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment Number" }) -- increment
+-- keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement Number" }) -- decrement
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split Vertical" }) -- split window vertically
@@ -31,12 +31,19 @@ keymap.set("n", "<leader>tx", ":tabclose<CR>", { desc = "Close Tab" }) -- close 
 keymap.set("n", "<leader>tn", ":tabn<CR>", { desc = "Next Tab" }) --  go to next tab
 keymap.set("n", "<leader>tp", ":tabp<CR>", { desc = "Prev Tab" }) --  go to previous tab
 
+-- buffer navigation
+keymap.set("n", "<leader>p", ":BufferLineCyclePrev<CR>", { desc = "Prev Buffer" })
+keymap.set("n", "<leader>n", ":BufferLineCycleNext<CR>", { desc = "Next Buffer" })
+
+-- disable arrow navigation in normal mode
+keymap.set("n", "<Up>", "<Nop>")
+keymap.set("n", "<Down>", "<Nop>")
+keymap.set("n", "<Left>", "<Nop>")
+keymap.set("n", "<Right>", "<Nop>")
+
 ----------------------
 -- Plugin Keybinds
 ----------------------
-
--- vim-maximizer
-keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>", { desc = "Toggle Max Window" }) -- toggle split window maximization
 
 -- nvim-tree
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle Explorer" }) -- toggle file explorer
@@ -49,16 +56,18 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find C
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "List Buffers" }) -- list open buffers in current neovim instance
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Help Tags" }) -- list available help tags
 
--- telescope git commands
-keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "List Commits" }) -- list all git commits (use <cr> to checkout) ["gc" for git commits]
-keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>", { desc = "List File Commits" }) -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
-keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", { desc = "List Branches" }) -- list git branches (use <cr> to checkout) ["gb" for git branch]
-keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Git Status" }) -- list current changes per file with diff preview ["gs" for git status]
+-- telescope git commands (using lazygit in floating term on arch, maybe useful for windows/mac?)
+-- keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "List Commits" }) -- list all git commits (use <cr> to checkout) ["gc" for git commits]
+-- -- keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>", { desc = "List File Commits" }) -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
+-- keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", { desc = "List Branches" }) -- list git branches (use <cr> to checkout) ["gb" for git branch]
+-- keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Git Status" }) -- list current changes per file with diff preview ["gs" for git status]
 
 -- restart lsp server
 keymap.set("n", "<leader>rs", ":LspRestart<CR>", { desc = "Restart LSP" }) -- mapping to restart lsp if necessary
 
-keymap.set("n", "<Up>", "<Nop>")
-keymap.set("n", "<Down>", "<Nop>")
-keymap.set("n", "<Left>", "<Nop>")
-keymap.set("n", "<Right>", "<Nop>")
+-- lspsaga keybinds (needs to use old style vim remaps, new style bugs out when exiting terminal mode)
+vim.cmd([[
+  nnoremap <silent> <leader>tt :Lspsaga open_floaterm<CR>
+  nnoremap <silent> <leader>tg :Lspsaga open_floaterm lazygit<CR>
+  tnoremap <silent> <leader>tt <C-\><C-n>:Lspsaga close_floaterm<CR>
+  ]])

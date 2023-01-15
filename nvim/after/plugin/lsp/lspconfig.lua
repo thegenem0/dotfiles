@@ -16,17 +16,17 @@ if not typescript_setup then
 	return
 end
 
+local navic_status, navic = pcall(require, "nvim-navic")
+if not navic_status then
+	return
+end
+
 local keymap = vim.keymap -- for conciseness
 
 -- enable keybinds only for when lsp server available
 local on_attach = function(client, bufnr)
 	-- keybind options
 	local opts = { noremap = true, silent = true, buffer = bufnr }
-
-	if client.name == "eslint" then
-		vim.cmd.LspStop("eslint")
-		return
-	end
 
 	-- set keybinds
 	keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts, { desc = "Show Definition" }) -- show definition, references
@@ -48,26 +48,120 @@ local on_attach = function(client, bufnr)
 		keymap.set("n", "<leader>oi", ":TypescriptOrganizeImports<CR>", { desc = "Organize Imports" }) -- organize imports (not in youtube nvim video)
 		keymap.set("n", "<leader>ru", ":TypescriptRemoveUnused<CR>", { desc = "Remove Unused Vars" }) -- remove unused variables (not in youtube nvim video)
 	end
+
+	if client.server_capabilities.documentSymbolProvider then
+		navic.attach(client, bufnr)
+	end
+	if client.name == "rust_analyzer" then
+		client.resolved_capabilities.document_formatting = false
+	end
 end
 
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
--- lspconfig utils
+local servers = {
+	"html",
+	"cssls",
+	"tailwindcss",
+	"eslint",
+	"emmet_ls",
+	"rust_analyzer",
+	"sumneko_lua",
+}
+
+for _, server in pairs(servers) do
+	local serverOpts = {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	}
+
+	if server == "rust_analyzer" then
+		local ok_rt, rust_tools = pcall(require, "rust-tools")
+		if not ok_rt then
+			print("Failed to load rust tools, will set up `rust_analyzer` without `rust-tools`.")
+		else
+			rust_tools.setup({
+				tools = {
+					autoSetHints = true,
+					hover_with_actions = true,
+					runnables = {
+						use_telescope = true,
+					},
+				},
+				server = serverOpts,
+			})
+			-- We don't want to call lspconfig.rust_analyzer.setup() when using
+			-- rust-tools. See
+			-- * https://github.com/simrat39/rust-tools.nvim/issues/183
+			-- * https://github.com/simrat39/rust-tools.nvim/issues/177
+			goto continue
+		end
+	end
+
+	if server == "eslint" then
+		lspconfig[server].setup(serverOpts, {
+			settings = {
+				codeActionOnSave = {
+					enable = true,
+					mode = "all",
+				},
+			},
+			-- Copied from nvim-lspconfig/lua/lspconfig/server_conigurations/eslint.js
+			root_dir = lspconfig.util.root_pattern(
+				".eslintrc",
+				"package.json",
+				".eslintrc.js",
+				".eslintrc.cjs",
+				".eslintrc.yaml",
+				".eslintrc.yml",
+				".eslintrc.json"
+			),
+		})
+		goto continue
+	end
+
+	if server == "emmet_ls" then
+		lspconfig[server].setup(
+			serverOpts,
+			{ filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" } }
+		)
+		goto continue
+	end
+
+	if server == "sumneko_lua" then
+		lspconfig[server].setup(serverOpts, {
+			{
+				settings = { -- custom settings for lua
+					Lua = {
+						-- make the language server recognize "vim" global
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							-- make language server aware of runtime files
+							library = {
+								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+								[vim.fn.stdpath("config") .. "/lua"] = true,
+							},
+						},
+					},
+				},
+			},
+		})
+		goto continue
+	end
+
+	lspconfig[server].setup(serverOpts)
+	::continue::
+end
 
 -- Change the Diagnostic symbols in the sign column (gutter)
--- (not in youtube nvim video)
 local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
-
--- configure html server
-lspconfig["html"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
 
 -- configure typescript server with plugin
 typescript.setup({
@@ -75,57 +169,4 @@ typescript.setup({
 		capabilities = capabilities,
 		on_attach = on_attach,
 	},
-})
-
--- configure css server
-lspconfig["cssls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
--- configure tailwindcss server
-lspconfig["tailwindcss"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
--- configure emmet language server
-lspconfig["emmet_ls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-})
-
--- configure lua server (with special settings)
-lspconfig["sumneko_lua"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	settings = { -- custom settings for lua
-		Lua = {
-			-- make the language server recognize "vim" global
-			diagnostics = {
-				globals = { "vim" },
-			},
-			workspace = {
-				-- make language server aware of runtime files
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.stdpath("config") .. "/lua"] = true,
-				},
-			},
-		},
-	},
-})
-
-lspconfig["eslint"].setup({
-	-- Copied from nvim-lspconfig/lua/lspconfig/server_conigurations/eslint.js
-	root_dir = lspconfig.util.root_pattern(
-		".eslintrc",
-		"package.json",
-		".eslintrc.js",
-		".eslintrc.cjs",
-		".eslintrc.yaml",
-		".eslintrc.yml",
-		".eslintrc.json"
-	),
 })

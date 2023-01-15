@@ -10,6 +10,12 @@ local keymap = vim.keymap -- for conciseness
 -- use C-c to exit insert mode
 keymap.set("i", "<C-c>", "<ESC>", { desc = "Exit Insert Mode" })
 
+-- remap write and quit to capitals
+vim.cmd([[
+command! W write
+command! Q quit
+]])
+
 -- clear search highlights
 keymap.set("n", "<leader>ch", ":nohl<CR>", { desc = "Clear Search Highlights" })
 
@@ -56,18 +62,15 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find C
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "List Buffers" }) -- list open buffers in current neovim instance
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Help Tags" }) -- list available help tags
 
--- telescope git commands (using lazygit in floating term on arch, maybe useful for windows/mac?)
--- keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "List Commits" }) -- list all git commits (use <cr> to checkout) ["gc" for git commits]
--- -- keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>", { desc = "List File Commits" }) -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
--- keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", { desc = "List Branches" }) -- list git branches (use <cr> to checkout) ["gb" for git branch]
--- keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Git Status" }) -- list current changes per file with diff preview ["gs" for git status]
+-- bufferline stuff
+keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Close current Buffer" })
 
 -- restart lsp server
 keymap.set("n", "<leader>rs", ":LspRestart<CR>", { desc = "Restart LSP" }) -- mapping to restart lsp if necessary
 
--- lspsaga keybinds (needs to use old style vim remaps, new style bugs out when exiting terminal mode)
+-- terminal keybinds
+keymap.set("n", "<leader>tt", ":ToggleTerm<cr>")
+keymap.set("n", "<leader>tg", ":ToggleTerm<cr> gl<cr>")
 vim.cmd([[
-  nnoremap <silent> <leader>tt :Lspsaga open_floaterm<CR>
-  nnoremap <silent> <leader>tg :Lspsaga open_floaterm lazygit<CR>
-  tnoremap <silent> <leader>tt <C-\><C-n>:Lspsaga close_floaterm<CR>
-  ]])
+tnoremap <esc> <C-\><C-N>
+]])

@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- auto install packer if not installed
 local ensure_packer = function()
 	local fn = vim.fn
@@ -38,29 +39,18 @@ return packer.startup(function(use)
 
 	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
 
-	-- essential plugins
-	use("tpope/vim-surround") -- add, delete, change surroundings (it's awesome)
+	use("tpope/vim-surround") -- add, delete, change surroundings
 
-	use("vim-scripts/ReplaceWithRegister") -- replace with register contents using motion (gr + motion)
-
-	-- commenting with gc
 	use("numToStr/Comment.nvim")
 
 	-- github co-pilot
 	use("github/copilot.vim")
 
 	-- nvim-transparent
-	use({
-		"xiyaowong/nvim-transparent",
-		config = function()
-			require("transparent").setup({
-				enable = true,
-			})
-		end,
-	})
+	use("xiyaowong/nvim-transparent")
 
 	-- file explorer
-	use("nvim-tree/nvim-tree.lua")
+	use({ "nvim-tree/nvim-tree.lua", tag = "nightly" })
 
 	-- vs-code like icons
 	use("kyazdani42/nvim-web-devicons")
@@ -68,11 +58,20 @@ return packer.startup(function(use)
 	-- bufferline
 	use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons" })
 
-	-- statusline
-	use("nvim-lualine/lualine.nvim")
+	-- lualine status and winbar
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+	})
+
+	-- navic
+	use("SmiteshP/nvim-navic")
 
 	-- fuzzy finding w/ telescope
 	use({ "nvim-telescope/telescope.nvim", tag = "0.1.0" }) -- fuzzy finder
+
+	-- nvim-terminal
+	use({ "akinsho/toggleterm.nvim", tag = "*" })
 
 	-- autocompletion
 	use("hrsh7th/nvim-cmp") -- completion plugin
@@ -98,6 +97,10 @@ return packer.startup(function(use)
 	-- formatting & linting
 	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
 	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
+	use("MunifTanjim/prettier.nvim")
+
+	-- rust tools
+	use("simrat39/rust-tools.nvim")
 
 	-- treesitter configuration
 	use({

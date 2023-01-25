@@ -12,6 +12,9 @@ vim.g.loaded_netrwPlugin = 1
 vim.cmd([[highlight NvimTreeNormal guibg=none guifg=#9da5b3]])
 
 nvimtree.setup({
+	view = {
+		adaptive_size = true,
+	},
 	-- change folder arrow icons
 	renderer = {
 		icons = {

@@ -32,7 +32,7 @@ null_ls.setup({
 		formatting.prettier,
 		formatting.stylua,
 		formatting.rustfmt.with(rustOptions),
-		diagnostics.eslint_d,
+		diagnostics.eslint,
 	},
 	-- configure format on save
 	on_attach = function(current_client, bufnr)

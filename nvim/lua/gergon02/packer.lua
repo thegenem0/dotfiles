@@ -36,10 +36,9 @@ return packer.startup(function(use)
 
 	-- tokyonight colorscheme for transparent terminal
 	use("folke/tokyonight.nvim")
+	use("chriskempson/base16-vim")
 
 	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
-
-	use("tpope/vim-surround") -- add, delete, change surroundings
 
 	use("numToStr/Comment.nvim")
 
@@ -97,6 +96,12 @@ return packer.startup(function(use)
 		"glepnir/lspsaga.nvim",
 		branch = "main",
 	})
+
+	-- lsp status
+	use("j-hui/fidget.nvim")
+
+	-- indent lines
+	use("lukas-reineke/indent-blankline.nvim")
 
 	-- formatting & linting
 	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters

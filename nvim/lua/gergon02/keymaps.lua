@@ -10,6 +10,11 @@ local keymap = vim.keymap -- for conciseness
 -- use C-c to exit insert mode
 keymap.set("i", "<C-c>", "<ESC>", { desc = "Exit Insert Mode" })
 
+keymap.set("i", "<C-j>", "<Down>", { desc = "Insert Mode Down" })
+keymap.set("i", "<C-k>", "<Up>", { desc = "Insert Mode Up" })
+keymap.set("i", "<C-h>", "<Left>", { desc = "Insert Mode Left" })
+keymap.set("i", "<C-l>", "<Right>", { desc = "Insert Mode Right" })
+
 -- remap write and quit to capitals
 vim.cmd([[
 command! W write

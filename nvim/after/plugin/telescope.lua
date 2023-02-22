@@ -8,7 +8,7 @@ if not actions_setup then
 	return
 end
 
-telescope.setup({
+local options = {
 	-- configure custom mappings
 	defaults = {
 		mappings = {
@@ -19,5 +19,13 @@ telescope.setup({
 			},
 		},
 	},
-})
+	extensions = {},
+}
 
+telescope.setup()
+
+pcall(function()
+	for _, ext in ipairs(options.extensions_list) do
+		telescope.load_extension(ext)
+	end
+end)

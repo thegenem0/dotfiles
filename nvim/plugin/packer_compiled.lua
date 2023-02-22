@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["base16-vim"] = {
+    loaded = true,
+    path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/base16-vim",
+    url = "https://github.com/chriskempson/base16-vim"
+  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
@@ -119,6 +124,11 @@ _G.packer_plugins = {
     path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
     url = "https://github.com/glepnir/dashboard-nvim"
   },
+  ["fidget.nvim"] = {
+    loaded = true,
+    path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -128,6 +138,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
   ["lspkind.nvim"] = {
     loaded = true,
@@ -250,11 +265,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/typescript.nvim",
     url = "https://github.com/jose-elias-alvarez/typescript.nvim"
-  },
-  ["vim-surround"] = {
-    loaded = true,
-    path = "/home/gergon02/.local/share/nvim/site/pack/packer/start/vim-surround",
-    url = "https://github.com/tpope/vim-surround"
   },
   ["vim-tmux-navigator"] = {
     loaded = true,

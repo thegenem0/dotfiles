@@ -34,6 +34,13 @@ return packer.startup(function(use)
 
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
 
+	-- nvim-reload
+	use("famiu/nvim-reload")
+
+	-- DAP
+	use("mfussenegger/nvim-dap")
+	use("rcarriga/nvim-dap-ui")
+
 	-- tokyonight colorscheme for transparent terminal
 	use("folke/tokyonight.nvim")
 	use("chriskempson/base16-vim")

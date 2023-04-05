@@ -4,9 +4,8 @@ if not status then
 end
 
 transparent.setup({
-	enable = false,
 	extra_groups = {},
-	exclude = {
+	exclude_groups = {
 		"lualine",
 	},
 })

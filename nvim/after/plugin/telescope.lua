@@ -19,13 +19,6 @@ local options = {
 			},
 		},
 	},
-	extensions = {},
 }
 
-telescope.setup()
-
-pcall(function()
-	for _, ext in ipairs(options.extensions_list) do
-		telescope.load_extension(ext)
-	end
-end)
+telescope.setup(options)

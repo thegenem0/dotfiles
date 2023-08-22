@@ -12,15 +12,15 @@ help:
 	| sort \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install:
+install: ## Installs Pacman and AUR packages
 	$(PKGINSTALL) --needed - < $(XDGBASE)/arch/pacmanlist
 	$(YAYINSTALL) --needed - < $(XDGBASE)/arch/aurlist
 
-pkgbackup:
+pkgbackup: ## Backs up Pacman and AUR packages
 	pacman -Qnq > $(PWD)/arch/pacmanlist
 	pacman -Qqem > $(PWD)/arch/aurlist
 
-configbackup:
+configbackup: ## Backs up config files
 	$(MKDIR) $(HOME)/.config/backup/
 	@test -L $(HOME)/.config/nvim/ || (test ! -d $(HOME)/.config/nvim/ || (echo "Backing up existing nvim config..." && mv $(HOME)/.config/nvim/ $(HOME)/.config/backup/nvim.backup/))
 	@test -L $(HOME)/.zshrc || (test ! -f $(HOME)/.zshrc || (echo "Backing up existing zshrc..." && mv $(HOME)/.zshrc $(HOME)/.config/backup/.zshrc.backup))
@@ -32,48 +32,48 @@ configbackup:
 	@test -L $(HOME)/.config/picom.conf || (test ! -f $(HOME)/.config/picom.conf || (echo "Backing up existing picom config..." && mv $(HOME)/.config/picom.conf $(HOME)/.config/backup/picom.conf.backup))
 	@test -L $(HOME)/.ssh/ || (test ! -d $(HOME)/.ssh/ || (echo "Backing up existing ssh config..." && mv $(HOME)/.ssh/ $(HOME)/.config/backup/ssh.backup/))
 
-nvim:
+nvim: ## Installs neovim and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking neovim config..."
 	$(MKDIR) ~/.config/nvim/
 	$LNDIR $(XDGBASE)/nvim/* ~/.config/nvim/
 
-zsh:
+zsh: ## Installs zsh and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking zsh config..."
 	$(LN) $(XDGBASE)/.zshrc ~/.zshrc
 	$(LN) $(XDGBASE)/.p10k.zsh ~/.p10k.zsh
 
-i3:
+i3: ## Installs i3 and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking i3 config..."
 	$(MKDIR) ~/.i3/
 	$(LNDIR) $(XDGBASE)/i3/* ~/.i3/
 
-i3status:
+i3status: ## Installs i3status and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking i3status config..."
 	$(MKDIR) ~/.i3status/
 	$(LNDIR) $(XDGBASE)/i3status/* ~/.config/i3status/
 
-kitty:
+kitty: ## Installs kitty and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking kitty config..."
 	$(MKDIR) ~/.config/kitty/
 	$(LNDIR) $(XDGBASE)/kitty/* ~/.config/kitty/
 
-fastfetch:
+fastfetch: ## Installs fastfetch and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking fastfetch config..."
 	$(MKDIR) ~/.config/fastfetch/
 	$(LNDIR) $(XDGBASE)/fastfetch/* ~/.config/fastfetch/
 
-picom:
+picom: ## Installs picom and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking picom config..."
 	$(LN) $(XDGBASE)/picom.conf ~/.config/picom.conf
 
-ssh:
+ssh: ## Installs ssh and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking ssh config..."
 	$(MKDIR) ~/.ssh/

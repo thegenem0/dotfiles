@@ -74,7 +74,5 @@ picom: ## Installs picom and symlinks config
 	$(LN) $(XDGBASE)/picom.conf ~/.config/picom.conf
 
 ssh: ## Installs ssh and symlinks config
-	$(PKGINSTALL) $@
 	@echo "Symlinking ssh config..."
-	$(MKDIR) ~/.ssh/
-	$(LNDIR) $(PWD)/.ssh/* ~/.ssh/
+	$(LNDIR) $(PWD)/.ssh ~/.ssh

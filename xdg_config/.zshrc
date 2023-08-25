@@ -15,10 +15,15 @@ fi
 if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
+
+if [[ -e ~/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  source ~/powerlevel10k/powerlevel10k.zsh-theme
+fi
+
 source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 fastfetch
-# aliases
 
+# aliases
 alias gl="lazygit"
 alias gowork="cd ~/Dev/Apadmi/"
 alias gome="cd ~/Dev/Personal"
@@ -34,8 +39,6 @@ lst() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export EDITOR="nvim"
-
-
 
 # pnpm
 export PNPM_HOME="/home/gergon02/.local/share/pnpm"

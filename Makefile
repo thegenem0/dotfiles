@@ -1,9 +1,10 @@
 MKDIR=mkdir -p
+RMDIR=rm -rf
 LN=ln -vsf
 LNDIR=ln -vs
 CP=cp -r
 PKGINSTALL=sudo pacman --noconfirm -S
-YAYINSTALL=yay --noconfirm -S
+AURINSTALL=paru --noconfirm -S
 XDGBASE=$(PWD)/xdg_config
 
 .DEFAULT_GOAL := help
@@ -13,13 +14,17 @@ help:
 	| sort \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+config: install i3-wm i3status zsh ssh ssh-set-perms kitty picom rofi fastfetch neovim 
+
+
 install: ## Installs Pacman and AUR packages
-	$(PKGINSTALL) --needed - < $(XDGBASE)/arch/pacmanlist
-	$(YAYINSTALL) --needed - < $(XDGBASE)/arch/aurlist
+	@./source_install.sh
+	# $(PKGINSTALL) --needed - < $(XDGBASE)/arch/pacmanlist
+	# $(YAYINSTALL) --needed - < $(XDGBASE)/arch/aurlist
 
 pkgbackup: ## Backs up Pacman and AUR packages
-	pacman -Qnq > $(PWD)/arch/pacmanlist
-	pacman -Qqem > $(PWD)/arch/aurlist
+	@pacman -Qnq > $(PWD)/arch/pacmanlist
+	@pacman -Qqem > $(PWD)/arch/aurlist
 
 configbackup: ## Backs up config files
 	$(MKDIR) $(HOME)/.config/backup/
@@ -33,11 +38,11 @@ configbackup: ## Backs up config files
 	@test -L $(HOME)/.config/picom.conf || (test ! -f $(HOME)/.config/picom.conf || (echo "Backing up existing picom config..." && mv $(HOME)/.config/picom.conf $(HOME)/.config/backup/picom.conf.backup))
 	@test -L $(HOME)/.ssh/ || (test ! -d $(HOME)/.ssh/ || (echo "Backing up existing ssh config..." && mv $(HOME)/.ssh/ $(HOME)/.config/backup/ssh.backup/))
 
-nvim: ## Installs neovim and symlinks config
+neovim: ## Installs neovim and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking neovim config..."
-	$(MKDIR) ~/.config/nvim/
-	$LNDIR $(XDGBASE)/nvim/* ~/.config/nvim/
+	$(RMDIR) ~/.config/nvim
+	$(LN) $(XDGBASE)/nvim ~/.config/nvim
 
 zsh: ## Installs zsh and symlinks config
 	$(PKGINSTALL) $@
@@ -45,34 +50,39 @@ zsh: ## Installs zsh and symlinks config
 	$(LN) $(XDGBASE)/.zshrc ~/.zshrc
 	$(LN) $(XDGBASE)/.p10k.zsh ~/.p10k.zsh
 
-i3: ## Installs i3 and symlinks config
+i3-wm: ## Installs i3 and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking i3 config..."
-	$(MKDIR) ~/.i3/
-	$(LNDIR) $(XDGBASE)/i3/* ~/.i3/
+	$(RMDIR) ~/.config/i3
+	$(LN) $(XDGBASE)/.i3 ~/.config/i3
 
 i3status: ## Installs i3status and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking i3status config..."
-	$(MKDIR) ~/.i3status/
-	$(LNDIR) $(XDGBASE)/i3status/* ~/.config/i3status/
+	$(RMDIR) ~/.config/i3status
+	$(LN) $(XDGBASE)/i3status ~/.config/i3status
 
 kitty: ## Installs kitty and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking kitty config..."
-	$(MKDIR) ~/.config/kitty/
-	$(LNDIR) $(XDGBASE)/kitty/* ~/.config/kitty/
+	$(RMDIR) ~/.config/kitty/
+	$(LN) $(XDGBASE)/kitty ~/.config/kitty
 
-fastfetch: ## Installs fastfetch and symlinks config
-	$(PKGINSTALL) $@
+fastfetch: ## Symlinks fastfetch config
 	@echo "Symlinking fastfetch config..."
-	$(MKDIR) ~/.config/fastfetch/
-	$(LNDIR) $(XDGBASE)/fastfetch/* ~/.config/fastfetch/
+	$(RMDIR) ~/.config/fastfetch
+	$(LN) $(XDGBASE)/fastfetch ~/.config/fastfetch
 
 picom: ## Installs picom and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking picom config..."
 	$(LN) $(XDGBASE)/picom.conf ~/.config/picom.conf
+
+rofi: ## Installs rofi and symlinks config
+	$(AURINSTALL) $@
+	@echo "Symlinking rofi config..."
+	$(RMDIR) ~/.config/rofi
+	$(LN) $(XDGBASE)/rofi ~/.config/rofi
 
 ssh: ## Installs ssh and symlinks config
 	@echo "Symlinking ssh config..."
@@ -80,7 +90,7 @@ ssh: ## Installs ssh and symlinks config
 	$(MKDIR) ~/.ssh
 	$(CP) $(PWD)/.ssh/ ~/.ssh/
 
-ssh-set-perms:
+ssh-set-perms: ## Sets rw perms for ssh files
 	@chmod 700 ~/.ssh
 		@for file in ~/.ssh/*; do \
 			if [ -f "$$file" ]; then \
@@ -90,4 +100,3 @@ ssh-set-perms:
 				esac \
 			fi \
 		done
-

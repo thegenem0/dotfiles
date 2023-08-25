@@ -33,7 +33,7 @@ exec --no-startup-id xrandr --output DP-2 --primary --output DP-5 --left-of DP-2
 exec_always --no-startup-id $HOME/.screenlayout/default.sh
 
 #feh wallpapers
-exec_always --no-startup-id feh --bg-scale --no-xinerama $HOME/.wallpapers/main_wallpaper_full.png 
+exec_always --no-startup-id feh --bg-scale --no-xinerama $HOME/.wallpapers/main_wallpaper.jpg
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 default_border pixel 1

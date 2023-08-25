@@ -15,18 +15,36 @@ fi
 if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
-source /usr/share/nvm/init-nvm.sh
-neofetch
-
+source ~/.zsh-nvm/zsh-nvm.plugin.zsh
+fastfetch
 # aliases
 
-alias yay = "yay --aur"
 alias gl="lazygit"
 alias gowork="cd ~/Dev/Apadmi/"
 alias gome="cd ~/Dev/Personal"
+alias vim="nvim"
+
+alias ls='exa --icons --long --git -h --group-directories-first'
+
 lst() {
     tree -L $1
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export EDITOR="nvim"
+
+
+
+# pnpm
+export PNPM_HOME="/home/gergon02/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

@@ -1,6 +1,7 @@
 MKDIR=mkdir -p
 LN=ln -vsf
 LNDIR=ln -vs
+CP=cp -r
 PKGINSTALL=sudo pacman --noconfirm -S
 YAYINSTALL=yay --noconfirm -S
 XDGBASE=$(PWD)/xdg_config
@@ -74,7 +75,19 @@ picom: ## Installs picom and symlinks config
 	$(LN) $(XDGBASE)/picom.conf ~/.config/picom.conf
 
 ssh: ## Installs ssh and symlinks config
-	$(PKGINSTALL) $@
 	@echo "Symlinking ssh config..."
-	$(MKDIR) ~/.ssh/
-	$(LNDIR) $(PWD)/.ssh/* ~/.ssh/
+	$(RMDIR) ~/.ssh
+	$(MKDIR) ~/.ssh
+	$(CP) $(PWD)/.ssh/ ~/.ssh/
+
+ssh-set-perms:
+	@chmod 700 ~/.ssh
+		@for file in ~/.ssh/*; do \
+			if [ -f "$$file" ]; then \
+				case "$$file" in \
+					~/.ssh/known_hosts|~/.ssh/config) chmod 644 $$file ;; \
+					*) chmod 600 $$file ;; \
+				esac \
+			fi \
+		done
+

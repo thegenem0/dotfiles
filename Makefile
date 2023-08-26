@@ -94,8 +94,7 @@ rofi: ## Installs rofi and symlinks config
 ssh: ## Installs ssh and symlinks config
 	@echo "Symlinking ssh config..."
 	$(RMDIR) ~/.ssh
-	$(MKDIR) ~/.ssh
-	$(CP) $(PWD)/.ssh/ ~/.ssh/
+	$(LN) $(PWD)/.ssh ~/.ssh
 
 ssh-set-perms: ## Sets rw perms for ssh files
 	@chmod 700 ~/.ssh

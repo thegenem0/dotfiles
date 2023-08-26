@@ -54,7 +54,14 @@ i3-wm: ## Installs i3 and symlinks config
 	$(PKGINSTALL) $@
 	@echo "Symlinking i3 config..."
 	$(RMDIR) ~/.config/i3
-	$(LN) $(XDGBASE)/.i3 ~/.config/i3
+	$(LN) $(XDGBASE)/i3 ~/.config/i3
+	@chmod -R +x ~/.config/i3/scripts
+
+dunst:
+	$(PKGINSTALL) $@
+	@echo "Symlinking dunst config..."
+	$(RMDIR) ~/.config/dunst
+	$(LN) $(XDGBASE)/dunst ~/.config/dunst
 
 i3status: ## Installs i3status and symlinks config
 	$(PKGINSTALL) $@

@@ -106,3 +106,9 @@ ssh-set-perms: ## Sets rw perms for ssh files
 				esac \
 			fi \
 		done
+
+smb: ## 
+	$(RMDIR) ~/.config/smb
+	$(LN) $(XDGBASE)/smb ~/.config/smb
+	@chmod -R +x ~/.config/smb/mount_smb.sh
+

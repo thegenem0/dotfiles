@@ -26,7 +26,6 @@ require('lazy').setup({
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
       'folke/neodev.nvim',
     },
   },
@@ -94,6 +93,47 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup({
+        background_colour = "#000000",
+        icons = {
+          ERROR = "",
+          WARN = "",
+          INFO = "",
+          DEBUG = "",
+          TRACE = "✎",
+        },
+        render = "minimal",
+        stages = "fade",
+      })
+    end
+  },
+  {
+    "folke/noice.nvim",
+    config = function()
+      require("noice").setup({
+        lsp = {
+          override = {
+            -- override the default lsp markdown formatter with Noice
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            -- override the lsp markdown formatter with Noice
+            ["vim.lsp.util.stylize_markdown"] = true,
+            -- override cmp documentation with Noice (needs the other options to work)
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        presets = {
+          lsp_doc_border = true,
+        }
+      })
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    }
+  },
 
   {
     'nvim-telescope/telescope.nvim',
@@ -114,7 +154,7 @@ require('lazy').setup({
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      'nvim-treesitter/nvim-treesitter-textobjects'
     },
     build = ':TSUpdate',
   },
@@ -138,6 +178,17 @@ require('lazy').setup({
   { "christoomey/vim-tmux-navigator" },
   { "github/copilot.vim" },
   { "akinsho/bufferline.nvim",       version = "*", dependencies = "nvim-tree/nvim-web-devicons", opts = {} },
+  {
+    "olexsmir/gopher.nvim",
+    opts = {
+      ft = { "go" },
+      goimport = 'gopls',
+      gofmt = 'gopls',
+      max_line_len = 120,
+      impl = "impl",
+      iferr = "iferr",
+    }
+  },
   {
     "akinsho/toggleterm.nvim",
     version = "*",
@@ -174,13 +225,31 @@ require('telescope').setup {
   },
 }
 
+require 'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true
+  },
+  ensure_installed = {
+    "bash",
+    "html",
+    "javascript",
+    "json",
+    "lua",
+    "luadoc",
+    "luap",
+    "markdown",
+    "markdown_inline",
+    "regex",
+    "tsx",
+    "typescript",
+    "yaml",
+    "go",
+  }
+}
 
-
--- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
 -- [[ Configure LSP ]]
---  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   local nmap = function(keys, func, desc)
     if desc then
@@ -197,11 +266,9 @@ local on_attach = function(_, bufnr)
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
 
-  -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
@@ -225,14 +292,11 @@ local servers = {
   },
 }
 
--- Setup neovim lua configuration
 require('neodev').setup()
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
@@ -251,7 +315,6 @@ mason_lspconfig.setup_handlers {
 }
 
 -- [[ Configure nvim-cmp ]]
--- See `:help cmp`
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()

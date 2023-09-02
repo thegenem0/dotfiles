@@ -5,5 +5,6 @@
 .ssh/personal filter=git-crypt diff=git-crypt
 .ssh/personal.pub filter=git-crypt diff=git-crypt
 .ssh/known_hosts filter=git-crypt diff=git-crypt
+xdg_config/smb/smb_creds filter=git-crypt diff=git-crypt
 
 

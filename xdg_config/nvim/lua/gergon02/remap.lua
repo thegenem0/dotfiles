@@ -16,6 +16,8 @@ keymap.set("i", "<C-l>", "<Right>", { desc = "Insert Mode Right" })
 vim.cmd([[
 command! W write
 command! Q quit
+command! Wq write | quit
+command! WQ write | quit
 ]])
 
 keymap.set("n", "q", "<Nop>")

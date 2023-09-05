@@ -1,3 +1,5 @@
+fastfetch
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,27 +7,19 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Use powerline
 USE_POWERLINE="true"
-# Source manjaro-zsh-configuration
-if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-  source /usr/share/zsh/manjaro-zsh-config
-fi
-# Use manjaro zsh prompt
-if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-  source /usr/share/zsh/manjaro-zsh-prompt
-fi
-
 if [[ -e ~/powerlevel10k/powerlevel10k.zsh-theme ]]; then
   source ~/powerlevel10k/powerlevel10k.zsh-theme
 fi
 
 source ~/.zsh-nvm/zsh-nvm.plugin.zsh
-fastfetch
 
 # aliases
 alias gl="lazygit"
-alias gowork="cd ~/Dev/Apadmi/"
+alias gowork="cd ~/Dev/Hace/"
 alias gome="cd ~/Dev/Personal"
 alias vim="nvim"
 
@@ -51,3 +45,5 @@ esac
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

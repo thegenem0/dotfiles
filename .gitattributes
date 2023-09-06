@@ -1,5 +1,7 @@
-.ssh/key filter=git-crypt diff=git-crypt
-.ssh/key.pub filter=git-crypt diff=git-crypt
+.ssh/personal filter=git-crypt diff=git-crypt
+.ssh/personal.pub filter=git-crypt diff=git-crypt
+.ssh/hace filter=git-crypt diff=git-crypt
+.ssh/hace.pub filter=git-crypt diff=git-crypt
 .ssh/known_hosts filter=git-crypt diff=git-crypt
 xdg_config/smb/smb_creds filter=git-crypt diff=git-crypt
 

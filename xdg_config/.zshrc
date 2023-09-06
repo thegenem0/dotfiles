@@ -33,6 +33,7 @@ lst() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export EDITOR="nvim"
+export JAVA_HOME="/usr/lib/jvm/java"
 
 # pnpm
 export PNPM_HOME="/home/gergon02/.local/share/pnpm"
@@ -46,4 +47,4 @@ esac
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

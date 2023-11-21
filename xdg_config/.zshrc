@@ -19,8 +19,8 @@ source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 
 # aliases
 alias gl="lazygit"
-alias gowork="cd ~/Dev/Hace/"
-alias gome="cd ~/Dev/Personal"
+alias gowork="cd ~/dev/hace/"
+alias gome="cd ~/dev/personal"
 alias vim="nvim"
 
 alias ls='exa --icons --long --git -h --group-directories-first'

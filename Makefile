@@ -23,7 +23,7 @@ install: ## Installs Pacman and AUR packages
 	# $(YAYINSTALL) --needed - < $(XDGBASE)/arch/aurlist
 
 pkgbackup: ## Backs up Pacman and AUR packages
-	@pacman -Qnq > $(PWD)/arch/pacmanlist
+	@pacman -Qne | grep -v "$(pacman -Qmq)" > $(PWD)/arch/pacmanlist
 	@pacman -Qqem > $(PWD)/arch/aurlist
 
 configbackup: ## Backs up config files

@@ -286,7 +286,12 @@ local servers = {
   cssls = { filetypes = { 'css', 'scss', 'less' } },
   jsonls = { filetypes = { 'json', 'jsonc' } },
   tailwindcss = {},
-  yamlls = {},
+  kotlin_language_server = {},
+  yamlls = {
+    schemaStore = {
+      enable = true
+    }
+  },
 
   lua_ls = {
     Lua = {
@@ -311,6 +316,7 @@ mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
+      flags = lsp_flags,
       on_attach = on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,

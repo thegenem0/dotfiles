@@ -23,6 +23,8 @@ vim.o.autoindent = true -- copy indent from current line when starting new one
 -- Save undo history
 vim.o.undofile = true
 
+-- vim.o.relativenumber = true
+
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true

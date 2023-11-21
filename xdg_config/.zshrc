@@ -25,15 +25,22 @@ alias vim="nvim"
 
 alias ls='exa --icons --long --git -h --group-directories-first'
 
+alias tf="terraform"
+
+alias cli-nosession="aws-vault exec hace-cli --no-session --"
+alias main-nosession="aws-vault exec hace-main --no-session --"
+
 lst() {
     tree -L $1
 }
+
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export EDITOR="nvim"
-export JAVA_HOME="/usr/lib/jvm/java"
 
 # pnpm
 export PNPM_HOME="/home/gergon02/.local/share/pnpm"
@@ -43,8 +50,12 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Created by `pipx` on 2023-10-19 15:06:46
+export PATH="$PATH:/home/thegenem0/.local/bin"

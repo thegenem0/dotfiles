@@ -314,7 +314,7 @@ workspace $ws9 output DP-0
 
 # picom: https://wiki.archlinux.org/title/Picom
 # manpage: https://man.archlinux.org/man/picom.1.en
-exec_always --no-startup-id picom -b
+# exec_always --no-startup-id picom -b
 
 #############################################
 # autostart applications/services on login: #
@@ -342,7 +342,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
-exec --no-startup-id sleep 1 && feh --bg-fill $HOME/.wallpapers/main_wallpaper.jpg
+exec --no-startup-id sleep 1 && feh --bg-fill $HOME/.wallpapers/main_wallpaper_full.png --no-xinerama
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -420,9 +420,8 @@ bar {
 		font pango: MesloLGS NF, FontAwesome 12
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	    	position top 
-#	    	i3bar_command i3bar --transparency
-		    #tray_output primary
-		    tray_padding 0
+	        tray_output primary
+	        tray_padding 0
 
 # When strip_workspace_numbers is set to yes,
 # any workspace that has a name of the form

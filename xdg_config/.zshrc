@@ -38,7 +38,13 @@ antigen bundle github
 antigen bundle bundler
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle Aloxaf/fzf-tab
+antigen bundle atuinsh/atuin@main
+antigen bundle MichaelAquilina/zsh-auto-notify
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+antigen bundle reegnz/jq-zsh-plugin
+antigen bundle aubreypwd/zsh-plugin-reload
+antigen bundle qoomon/zsh-lazyload
 
 antigen apply
 
@@ -85,7 +91,6 @@ source "/home/thegenem0/.sdkman/bin/sdkman-init.sh"
 
 # Created by `pipx` on 2023-10-19 15:06:46
 export PATH="$PATH:/home/thegenem0/.local/bin"
-export GPG_TTY=$(tty)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

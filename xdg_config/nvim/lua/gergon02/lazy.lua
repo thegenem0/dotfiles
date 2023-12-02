@@ -206,6 +206,7 @@ require('lazy').setup({
     config = function() require("nvim-autopairs").setup {} end
   },
   { "windwp/nvim-ts-autotag" },
+  { "braxtons12/blame_line.nvim", config = function() require("blame_line").setup() end },
 
   -- {{ADDITIONAL PLUGINS}}
   -- Require all external plugins here

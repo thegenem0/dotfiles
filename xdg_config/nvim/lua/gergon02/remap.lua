@@ -57,9 +57,10 @@ vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc 
 --     })
 -- end, { desc = '[/] Fuzzily search in current buffer' })
 
-keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-keymap.set('n', '<leader>fs', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+keymap.set('n', '<leader>fs', require('telescope.builtin').live_grep, { desc = '[F]ind [S]trings' })
+keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[F]ind [D]iagnostics' })
+keymap.set('n', '<leader>nb', require('nvim-navbuddy').open, { desc = '[N]av[B]uddy' })
 
 keymap.set("n", "<leader>ca", "<cmd>CodeActionMenu<cr>", { desc = "Smart Rename" })
 keymap.set("n", "gf", "<cmd>lua require('goto-preview').goto_preview_definition()<cr>", { desc = "Flotaing Definition" })

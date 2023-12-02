@@ -27,6 +27,15 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       'folke/neodev.nvim',
+      {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+          "SmiteshP/nvim-navic",
+          "MunifTanjim/nui.nvim"
+        },
+        opts = { lsp = { auto_attach = true } }
+      },
+
     },
   },
   {
@@ -73,23 +82,13 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
-    opts = {
-      options = {
-        icons_enabled = false,
-        theme = 'onedark',
-        component_separators = '|',
-        section_separators = '',
-      },
-    },
   },
 
   {
     -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {}
   },
 
   -- "gc" to comment visual regions/lines
@@ -215,6 +214,7 @@ require('lazy').setup({
   require("plugin.autoformat")
 }, {})
 
+
 -- [[ Configure Telescope ]]
 require('telescope').setup {
   defaults = {
@@ -252,12 +252,60 @@ require 'nvim-treesitter.configs'.setup {
 }
 
 pcall(require('telescope').load_extension, 'fzf')
+local navic = require('nvim-navic')
+
+require('lualine').setup({
+  options = {
+    icons_enabled = false,
+    theme = 'onedark',
+    component_separators = '|',
+    section_separators = '',
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch' },
+    lualine_c = { {
+      'filename',
+      function()
+
+      end,
+    } },
+    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' },
+  },
+  winbar = {
+    lualine_a = {
+      {
+        function()
+          local version_info = vim.version()
+          return "v." .. version_info.major .. '.' .. version_info.minor
+        end, }
+    },
+    lualine_b = {
+      {
+        function()
+          if navic.is_available() then
+            return navic.get_location()
+          else
+            return "[No buffers]"
+          end
+        end,
+      }
+    },
+  },
+})
+
 
 -- [[ Configure LSP ]]
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
+    end
+
+    if client.server_capabilities.documentSymbolProvider then
+      navic.attach(client, bufnr)
     end
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })

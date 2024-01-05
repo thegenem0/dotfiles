@@ -1,5 +1,5 @@
 local M = {
-{
+  {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -20,7 +20,7 @@ local M = {
 
     },
   },
-{
+  {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -44,15 +44,6 @@ local M = {
     build = ':TSUpdate',
   },
   {
-    'weilbith/nvim-code-action-menu',
-    cmd = 'CodeActionMenu',
-  },
-  { 'rmagatti/goto-preview',         opts = {} },
-    { "mbbill/undotree" },
-  { "christoomey/vim-tmux-navigator" },
-  { "github/copilot.vim" },
-  { "akinsho/bufferline.nvim",       version = "*", dependencies = "nvim-tree/nvim-web-devicons", opts = {} },
-  {
     "olexsmir/gopher.nvim",
     opts = {
       ft = { "go" },
@@ -63,33 +54,7 @@ local M = {
       iferr = "iferr",
     }
   },
-  {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    opts = {
-      direction = "float",
-      autochdir = true,
-      float_opts = {
-        border = "single",
-      },
-
-    }
-  },
-  {
-    "windwp/nvim-autopairs",
-    config = function() require("nvim-autopairs").setup {} end
-  },
-  { "windwp/nvim-ts-autotag" },
-  {
-    "braxtons12/blame_line.nvim",
-    config = function()
-      require("blame_line").setup({
-        show_in_visual = false,
-        show_in_insert = false,
-        delay = 1000,
-      })
-    end
-  },
 }
 
 return M
+

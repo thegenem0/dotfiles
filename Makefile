@@ -39,7 +39,7 @@ configbackup: ## Backs up config files
 	@test -L $(HOME)/.ssh/ || (test ! -d $(HOME)/.ssh/ || (echo "Backing up existing ssh config..." && mv $(HOME)/.ssh/ $(HOME)/.config/backup/ssh.backup/))
 
 neovim: ## Installs neovim and symlinks config
-	$(PKGINSTALL) $@
+	#$(PKGINSTALL) $@
 	@echo "Symlinking neovim config..."
 	$(RMDIR) ~/.config/nvim
 	$(LN) $(XDGBASE)/nvim ~/.config/nvim

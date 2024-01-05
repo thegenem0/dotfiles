@@ -242,6 +242,9 @@ bindsym $mod+a focus parent
 # open new empty workspace
 # bindsym $mod+Shift+n exec ~/.config/i3/scripts/empty_workspace
 
+# screenshot to clipboard
+bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+
 # Multimedia Keys
 
 # volume

@@ -25,7 +25,7 @@ sleep 0.2
 # ----------------------------------------------------- 
 # Default theme: /THEMEFOLDER;/VARIATION
 # ----------------------------------------------------- 
-themestyle="/ml4w;/ml4w/light"
+themestyle="/default;/default/light"
 
 # ----------------------------------------------------- 
 # Get current theme information from .cache/.themestyle.sh

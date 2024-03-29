@@ -76,7 +76,6 @@ sddm:
 	$(LN) $(XDGBASE)/sddm ~/.config/sddm
 	
 wal:
-	$(PKGINSTALL) $@
 	@echo "Symlinking wal config..."
 	$(RMDIR) ~/.config/wal
 	$(LN) $(XDGBASE)/wal ~/.config/wal

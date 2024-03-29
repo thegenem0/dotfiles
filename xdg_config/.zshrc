@@ -64,6 +64,10 @@ alias main-nosession="aws-vault exec hace-main --no-session --"
 
 alias init-hace="git config user.email "gergo@thisishace.com" && git config user.name "gergo-at-hace""
 alias init-me="git config user.email "nemethgergo02@gmail.com" && git config user.name "thegeneme0""
+alias plantuml='java -jar /home/thegenem0/.plantuml/plantuml.jar'
+
+alias parquet="~/.libs/parquet/parquet.sh"
+alias awslocal="AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test AWS_DEFAULT_REGION=${DEFAULT_REGION:-$AWS_DEFAULT_REGION} aws --endpoint-url=http://${LOCALSTACK_HOST:-localhost}:4566"
 
 
 
@@ -76,6 +80,8 @@ bindkey "^[[1;5D" backward-word
 
 export EDITOR="nvim"
 
+### PATHS ###
+
 # pnpm
 export PNPM_HOME="/home/gergon02/.local/share/pnpm"
 case ":$PATH:" in
@@ -84,13 +90,25 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# Created by `pipx` on 2023-10-19 15:06:46
+export PATH="$PATH:/home/thegenem0/.local/bin"
+
+export PATH=${PATH}:`go env GOPATH`/bin
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/thegenem0/google-cloud-sdk/path.zsh.inc' ]; then . '/home/thegenem0/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/thegenem0/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/thegenem0/google-cloud-sdk/completion.zsh.inc'; fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#[ -f "/home/thegenem0/.ghcup/env" ] && source "/home/thegenem0/.ghcup/env" # ghcup-env
+[ -f "/home/thegenem0/.ghcup/env" ] && source "/home/thegenem0/.ghcup/env" # ghcup-env
+
+eval "$(pyenv init --path)"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 source "/home/thegenem0/.sdkman/bin/sdkman-init.sh"
 
-
-# Created by `pipx` on 2023-10-19 15:06:46
-export PATH="$PATH:/home/thegenem0/.local/bin"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

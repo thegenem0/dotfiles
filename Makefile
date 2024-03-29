@@ -4,7 +4,7 @@ LN=ln -vsf
 LNDIR=ln -vs
 CP=cp -r
 PKGINSTALL=sudo pacman --noconfirm -S
-AURINSTALL=paru --noconfirm -S
+AURINSTALL=yay --noconfirm -S
 XDGBASE=$(PWD)/xdg_config
 
 .DEFAULT_GOAL := help
@@ -60,7 +60,7 @@ picom:
 	$(LN) $(XDGBASE)/picom.conf ~/.config/picom.conf
 
 rofi:
-	$(AURINSTALL) $@
+	$(AURINSTALL) rofi-lbonn-wayland
 	@echo "Symlinking rofi config..."
 	$(RMDIR) ~/.config/rofi
 	$(LN) $(XDGBASE)/rofi ~/.config/rofi
@@ -92,7 +92,16 @@ wlogout:
 	$(RMDIR) ~/.config/wlogout
 	$(LN) $(XDGBASE)/wlogout ~/.config/wlogout
 
-
+ssh-set-perms: ## Sets rw perms for ssh files
+	@chmod 700 ~/.ssh
+		@for file in ~/.ssh/*; do \
+			if [ -f "$$file" ]; then \
+				case "$$file" in \
+					~/.ssh/known_hosts|~/.ssh/config) chmod 644 $$file ;; \
+					*) chmod 600 $$file ;; \
+				esac \
+			fi \
+		done
 
 
 
@@ -175,13 +184,5 @@ wlogout:
 # 	$(RMDIR) ~/.ssh
 # 	$(LN) $(PWD)/.ssh ~/.ssh
 #
-# ssh-set-perms: ## Sets rw perms for ssh files
-# 	@chmod 700 ~/.ssh
-# 		@for file in ~/.ssh/*; do \
-# 			if [ -f "$$file" ]; then \
-# 				case "$$file" in \
-# 					~/.ssh/known_hosts|~/.ssh/config) chmod 644 $$file ;; \
-# 					*) chmod 600 $$file ;; \
-# 				esac \
-# 			fi \
-# 		done
+
+

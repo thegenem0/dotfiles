@@ -19,6 +19,7 @@ config: install i3-wm i3status zsh ssh ssh-set-perms kitty picom rofi fastfetch 
 hypr: install-base settings dunst fastfetch hypr login neovim picom rofi scripts sddm wal waybar wlogout
 
 install-base:
+	@sudo chmod +x ./install.sh
 	@./install.sh
 
 settings:

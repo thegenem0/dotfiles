@@ -26,13 +26,16 @@ return {
         local client = vim.lsp.get_client_by_id(client_id)
         local bufnr = args.buf
 
+        if client.name == "tsserver" then
+          return
+        elseif client.name == "eslint" then
+          vim.b.eslint_formatter_attached = true
+          client.server_capabilities.documentFormattingProvider = true
+        end
+
         if not client.server_capabilities.documentFormattingProvider then
           return
         end
-
-        -- if client.name == 'tsserver' then
-        -- return
-        -- end
 
         vim.api.nvim_create_autocmd('BufWritePre', {
           group = get_augroup(client),
@@ -41,10 +44,14 @@ return {
             if not format_is_enabled then
               return
             end
+            print('Formatting ' .. vim.api.nvim_buf_get_name(bufnr) .. ' with ' .. client.name)
 
             vim.lsp.buf.format {
               async = false,
               filter = function(c)
+                if vim.b.eslint_formatter_attached then
+                  return c.name == "eslint"
+                end
                 return c.id == client.id
               end,
             }

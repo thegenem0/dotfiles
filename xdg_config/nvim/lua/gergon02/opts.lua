@@ -15,8 +15,8 @@ vim.o.clipboard = 'unnamedplus'
 -- Enable break indent
 vim.o.breakindent = true
 
-vim.o.tabstop = 4       -- 4 spaces for tabs (prettier default)
-vim.o.shiftwidth = 4    -- 4 spaces for indent width
+vim.o.tabstop = 2       -- 4 spaces for tabs (prettier default)
+vim.o.shiftwidth = 2    -- 4 spaces for indent width
 vim.o.expandtab = true  -- expand tab to spaces
 vim.o.autoindent = true -- copy indent from current line when starting new one
 

@@ -190,6 +190,10 @@ require('lazy').setup({
     }
   },
   {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
+  {
     "akinsho/toggleterm.nvim",
     version = "*",
     opts = {
@@ -215,6 +219,11 @@ require('lazy').setup({
         delay = 1000,
       })
     end
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
   },
 
   -- {{ADDITIONAL PLUGINS}}
@@ -304,6 +313,7 @@ require('lualine').setup({
 })
 
 
+
 -- [[ Configure LSP ]]
 local on_attach = function(client, bufnr)
   local nmap = function(keys, func, desc)
@@ -336,7 +346,6 @@ end
 local servers = {
   gopls = {},
   rust_analyzer = {},
-  tsserver = {},
   html = { filetypes = { 'html', 'twig', 'hbs' } },
   cssls = { filetypes = { 'css', 'scss', 'less' } },
   jsonls = { filetypes = { 'json', 'jsonc' } },
@@ -376,7 +385,7 @@ mason_lspconfig.setup_handlers {
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
-  end
+  end,
 }
 
 -- [[ Configure nvim-cmp ]]

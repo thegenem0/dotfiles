@@ -54,6 +54,11 @@ neovim:
 	@echo "Symlinking neovim config..."
 	$(RMDIR) ~/.config/nvim
 	$(LN) $(XDGBASE)/nvim ~/.config/nvim
+zsh: ## Installs zsh and symlinks config
+	$(PKGINSTALL) $@
+	@echo "Symlinking zsh config..."
+	$(LN) $(XDGBASE)/.zshrc ~/.zshrc
+	$(LN) $(XDGBASE)/.p10k.zsh ~/.p10k.zsh
 
 picom:
 	$(PKGINSTALL) $@
@@ -75,6 +80,12 @@ sddm:
 	@echo "Symlinking sddm config..."
 	$(RMDIR) ~/.config/sddm
 	$(LN) $(XDGBASE)/sddm ~/.config/sddm
+
+kitty:
+	$(PKGINSTALL) $@
+	@echo "Symlinking kitty config..."
+	$(RMDIR) ~/.config/kitty/
+	$(LN) $(XDGBASE)/kitty ~/.config/kitty
 	
 wal:
 	@echo "Symlinking wal config..."
@@ -132,12 +143,6 @@ ssh-set-perms: ## Sets rw perms for ssh files
 # 	$(RMDIR) ~/.config/nvim
 # 	$(LN) $(XDGBASE)/nvim ~/.config/nvim
 #
-# zsh: ## Installs zsh and symlinks config
-# 	$(PKGINSTALL) $@
-# 	@echo "Symlinking zsh config..."
-# 	$(LN) $(XDGBASE)/.zshrc ~/.zshrc
-# 	$(LN) $(XDGBASE)/.p10k.zsh ~/.p10k.zsh
-#
 # i3-wm: ## Installs i3 and symlinks config
 # 	$(PKGINSTALL) $@
 # 	@echo "Symlinking i3 config..."
@@ -157,11 +162,6 @@ ssh-set-perms: ## Sets rw perms for ssh files
 # 	$(RMDIR) ~/.config/i3status
 # 	$(LN) $(XDGBASE)/i3status ~/.config/i3status
 #
-# kitty: ## Installs kitty and symlinks config
-# 	$(PKGINSTALL) $@
-# 	@echo "Symlinking kitty config..."
-# 	$(RMDIR) ~/.config/kitty/
-# 	$(LN) $(XDGBASE)/kitty ~/.config/kitty
 #
 # fastfetch: ## Symlinks fastfetch config
 # 	@echo "Symlinking fastfetch config..."

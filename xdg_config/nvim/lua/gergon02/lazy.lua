@@ -178,7 +178,7 @@ require('lazy').setup({
   { "mbbill/undotree" },
   { "christoomey/vim-tmux-navigator" },
   { "github/copilot.vim" },
-  { "akinsho/bufferline.nvim",       version = "*", dependencies = "nvim-tree/nvim-web-devicons", opts = {} },
+  { 'akinsho/bufferline.nvim',       version = "*", dependencies = 'nvim-tree/nvim-web-devicons' },
   {
     "olexsmir/gopher.nvim",
     opts = {
